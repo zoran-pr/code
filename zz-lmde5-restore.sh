@@ -2,35 +2,37 @@
 
 second_user="ljeto"
 user_id=2001
-path=$(echo "PWD")
+path=$(echo "$PWD")
 
-# create 2nd user/group                                                           >
-sudo groupadd -g ${user_id} ${new_user}
-sudo useradd -m -u ${use_id} -s bash -g ${new_user} -G adm,dialout,fax,cdrom,floppy,tape,sud>
-ideo,plugdev,users,kvm,netdev,lpadmin,bluetooth,scanner,vboxusers ljeto
-sudo passwd ${new_user}
+# create 2nd user/group
+sudo groupadd -g ${user_id} ${second_user}
+sudo useradd -m -u ${user_id} -s "/bin/bash" -g ${second_user} -G adm,dialout,fax,cdrom,floppy,tape,sudo,audio,dip,video,plugdev,users,netdev,lpadmin,bluetooth,scanner ljeto
+sudo passwd ${second_user}
 
 # create 2nd user nfs mount
-sudo mkdir -p /mnt/nfs/spooky/nfs-${second-user}
+sudo mkdir -p /mnt/nfs/spooky/nfs-${second_user}
 sudo chown ${second_user}:${second_user} /mnt/nfs/spooky/nfs-${second_user}
 
 # restore all deb's
-sudo rsync -av etc/apt/sources.list.d/ /etc/apt/sources.list.d/
-sudo apt-key add ${path}/deb-trusted-keys
-sudo dpkg --set-selections < ${path}/deb-packages.list
+#sudo rsync -av etc/apt/sources.list.d/ /etc/apt/sources.list.d/
+sudo rm -rf /etc/apt
+sudo rsync -av ${path}/etc/apt/ /etc/apt/
+#sudo apt-key add ${path}/deb-trusted-keys
 sudo apt-get update
-sudo apt-get -u dselect-upgrade
+#sudo dpkg --set-selections < ${path}/apt-packages.list
+#sudo apt-get update
+#sudo apt-get -u dselect-upgrade -y
 
 # restore custm files
 sudo rsync -av etc/profile.d/path-opt-bin.sh /etc/profile.d/path-opt-bin.sh
+#sudo rsync =av etc/fstab /etc/fstab
 
-# restore all users
-sudo rsync -av ${path}/home/ /home/
+# restore ${second_user} users first
+sudo rsync -av ${path}/home/${second_user}/ /home/${second_user}/
 
 #restore code
-cp -f ${path}/settings.json /home/$USER/.config/Code/User/
-bash ${path}//code-extensions.list
+#cp -f ${path}/settings.json /home/$USER/.config/Code/User/
+#bash ${path}/code-extensions.list
 
 # restore python packages
-pip install -r ${path}/python-packages.list
-
+#pip install -r ${path}/python-packages.list

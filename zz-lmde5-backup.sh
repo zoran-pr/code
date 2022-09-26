@@ -31,3 +31,7 @@ cp -f /home/$USER/.config/Code/User/*.json ${backup_dir}/
 
 # backup all python packages
 pip freeze --all > ${backup_dir}/python-packages.list
+
+# copy restore script from githun to backup dir
+sudo wget https://raw.githubusercontent.com/zoran-pr/code/main/zz-lmde5-restore.sh -P ${backup_dir}/
+
