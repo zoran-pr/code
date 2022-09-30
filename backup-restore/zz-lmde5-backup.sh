@@ -25,7 +25,7 @@ sudo rsync -aRv /boot/grub/themes "${backup_dir}/localhost/"
 # ap-ky exportall is outdated but why not
 sudo apt-key exportall > "${backup_dir}/apt-trusted-keys"
 sudo rsync -aRv /usr/share/keyrings "${backup_dir}/localhost/"
-sudo rsync -av /etc//apt "${backup_dir}/localhost/"
+sudo rsync -aRv /etc/apt "${backup_dir}/localhost/"
 
 # making sure none are marked deinstall
 dpkg --get-selections | sed -n 's/\<deinstall$/install/p' | sudo dpkg --set-selections
@@ -40,4 +40,4 @@ cp -f /home/$USER/.config/Code/User/settings.json "${backup_dir}/code.settings.j
 pip freeze --all > "${backup_dir}/python-packages.list"
 
 # copy restore script from githun to backup dir
-sudo wget https://raw.githubusercontent.com/zoran-pr/code/main/zz-lmde5-restore.sh -P ${backup_dir}/
+sudo wget https://raw.githubusercontent.com/zoran-pr/code/main/backup-restore/zz-lmde5-restore.sh -P ${backup_dir}/
