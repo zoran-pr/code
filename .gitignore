@@ -1,2 +1,5 @@
-**/temp
-workspace.code-workspace
+
+.gitignore
+**include/
+**/*.save
+code.code-workspace
