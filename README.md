@@ -1,2 +1,2 @@
-# Script collection I use
+# Script collection
 
